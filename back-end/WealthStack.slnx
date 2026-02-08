@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="WealthStack.API/WealthStack.API.csproj" />
+  <Project Path="WealthStack.Application/WealthStack.Application.csproj" />
+  <Project Path="WealthStack.Domain/WealthStack.Domain.csproj" />
+  <Project Path="WealthStack.Infrastructure/WealthStack.Infrastructure.csproj" />
+  <Project Path="WealthStack.Tests/WealthStack.Tests.csproj" />
+</Solution>
