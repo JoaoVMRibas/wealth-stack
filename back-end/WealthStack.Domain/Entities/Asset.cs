@@ -1,0 +1,26 @@
+using WealthStack.Domain.Enums;
+
+namespace WealthStack.Domain.Entities;
+
+public class Asset
+{
+    public int Id { get; private set; }
+    public string Name { get; private set; } = string.Empty;
+    public string Ticker { get; private set; } = string.Empty;
+    public AssetType Type { get; private set; }
+
+    private readonly List<Transaction> _transactions = [];
+    public IReadOnlyCollection<Transaction> Transactions => _transactions.AsReadOnly();
+
+    private readonly List<AssetHistory> _history = [];
+    public IReadOnlyCollection<AssetHistory> History => _history.AsReadOnly();
+    
+    private Asset() {}
+
+    public Asset(string ticker, string name, AssetType type)
+    {
+        Ticker = ticker;
+        Name = name;
+        Type = type;
+    }
+}
