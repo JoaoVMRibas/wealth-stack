@@ -1,4 +1,5 @@
 using WealthStack.Domain.Enums;
+using WealthStack.Domain.Exceptions;
 
 namespace WealthStack.Domain.Entities;
 
@@ -19,8 +20,11 @@ public class Asset
 
     public Asset(string ticker, string name, AssetType type)
     {
-        Ticker = ticker;
-        Name = name;
+        if(string.IsNullOrWhiteSpace(ticker)) throw new RequiredFieldException(nameof(ticker));
+        if(string.IsNullOrWhiteSpace(name)) throw new RequiredFieldException(nameof(name));
+        
+        Ticker = ticker.Trim().ToUpper();
+        Name = name.Trim();
         Type = type;
     }
 }

@@ -1,3 +1,5 @@
+using WealthStack.Domain.Exceptions;
+
 namespace WealthStack.Domain.Entities;
 
 public class Portfolio
@@ -13,6 +15,8 @@ public class Portfolio
 
     public Portfolio(string name)
     {
+        if(string.IsNullOrWhiteSpace(name)) throw new RequiredFieldException(nameof(name));
+
         Name = name;
     }
 
