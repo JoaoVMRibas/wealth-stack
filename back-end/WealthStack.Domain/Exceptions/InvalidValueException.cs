@@ -4,12 +4,6 @@ public class InvalidValueException : DomainException
 {
     public InvalidValueException(string message) : base(message) {}
 
-    public static InvalidValueException InvalidAsset()
-        => new("Invalid asset.");
-
-    public static InvalidValueException InvalidPortfolio()
-        => new("Invalid portfolio.");
-
     public static InvalidValueException QuantityMustBeGreaterThanZero()
         => new("The quantity must be greater than zero.");
 
