@@ -14,7 +14,6 @@ public class AssetHistory
 
     public AssetHistory(int assetId, decimal price, DateTime referenceDate)
     {
-        if(assetId <= 0) throw InvalidValueException.InvalidAsset();
         if(price <= 0) throw InvalidValueException.PriceMustBeGreaterThanZero();
 
         AssetId = assetId;
