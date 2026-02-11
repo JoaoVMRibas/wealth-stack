@@ -1,9 +1,10 @@
+using WealthStack.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Controllers
-builder.Services.AddControllers();
+builder.Services.AddInfrastructure(builder.Configuration);
 
-// Swagger (opcional, mas útil no dev)
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
