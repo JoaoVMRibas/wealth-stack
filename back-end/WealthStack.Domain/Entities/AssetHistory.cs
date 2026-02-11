@@ -16,6 +16,8 @@ public class AssetHistory
     {
         if(price <= 0) throw InvalidValueException.PriceMustBeGreaterThanZero();
 
+        if(referenceDate > DateTime.UtcNow.AddMinutes(5)) throw new FutureDateNotAllowedException();
+
         AssetId = assetId;
         Price = price;
         ReferenceDate = referenceDate;
