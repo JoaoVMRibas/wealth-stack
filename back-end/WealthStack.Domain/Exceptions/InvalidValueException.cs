@@ -1,6 +1,6 @@
 namespace WealthStack.Domain.Exceptions;
 
-public class InvalidValueException : DomainException
+public sealed class InvalidValueException : DomainException
 {
     public InvalidValueException(string message) : base(message) {}
 
