@@ -481,5 +481,9 @@ $RECYCLE.BIN/
 # Vim temporary swap files
 *.swp
 
-WealthStack.API/appsettings.Development.json
-WealthStack.Infrastructure/Migrations/
+# AppSettings
+back-end/WealthStack.API/appsettings.Development.json
+back-end/WealthStack.API/appsettings.json
+
+# EF Migrations
+back-end/WealthStack.Infrastructure/Migrations/
