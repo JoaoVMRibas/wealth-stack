@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WealthStack.Domain.Entities;
 using WealthStack.Domain.Interfaces;
 using WealthStack.Infrastructure.Data;
@@ -14,31 +15,31 @@ public class AssetRepository : IAssetRepository
     }
     public async Task AddAsync(Asset asset)
     {
-        throw new NotImplementedException();
+        await _context.Assets.AddAsync(asset);
     }
 
     public async Task<IEnumerable<Asset>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Assets.ToListAsync();
     }
 
     public async Task<Asset?> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Assets.FindAsync(id);
     }
 
     public async Task<Asset?> GetByTickerAsync(string ticker)
     {
-        throw new NotImplementedException();
-    }
-
-    public void Remove(Asset asset)
-    {
-        throw new NotImplementedException();
+        return await _context.Assets.FirstOrDefaultAsync(a => a.Ticker == ticker);
     }
 
     public void Update(Asset asset)
     {
-        throw new NotImplementedException();
+        _context.Assets.Update(asset);
+    }
+
+    public void Remove(Asset asset)
+    {
+        _context.Assets.Remove(asset);
     }
 }
