@@ -1,21 +1,28 @@
 using WealthStack.Domain.Entities;
 using WealthStack.Domain.Interfaces;
+using WealthStack.Infrastructure.Data;
 
 namespace WealthStack.Infrastructure.Repositories;
 
 public class AssetHistoryRepository : IAssetHistoryRepository
 {
-    public Task AddAsync(AssetHistory assetHistory)
+    private readonly WealthStackDbContext _context;
+
+    public AssetHistoryRepository(WealthStackDbContext context)
+    {
+        _context = context;
+    }
+    public async Task AddAsync(AssetHistory assetHistory)
     {
         throw new NotImplementedException();
     }
 
-    public Task AddRangeAsync(IEnumerable<AssetHistory> historyRecords)
+    public async Task AddRangeAsync(IEnumerable<AssetHistory> historyRecords)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<AssetHistory>> GetHistoryByAssetIdAsync(int assetId)
+    public async Task<IEnumerable<AssetHistory>> GetHistoryByAssetIdAsync(int assetId)
     {
         throw new NotImplementedException();
     }

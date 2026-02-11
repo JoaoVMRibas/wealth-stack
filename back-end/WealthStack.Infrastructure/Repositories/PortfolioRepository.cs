@@ -1,21 +1,28 @@
 using WealthStack.Domain.Entities;
 using WealthStack.Domain.Interfaces;
+using WealthStack.Infrastructure.Data;
 
 namespace WealthStack.Infrastructure.Repositories;
 
 public class PortfolioRepository : IPortfolioRepository
 {
-    public Task AddAsync(Portfolio portfolio)
+    private readonly WealthStackDbContext _context;
+
+    public PortfolioRepository(WealthStackDbContext context)
+    {
+        _context = context;
+    }
+    public async Task AddAsync(Portfolio portfolio)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Portfolio>> GetAllAsync()
+    public async Task<IEnumerable<Portfolio>> GetAllAsync()
     {
         throw new NotImplementedException();
     }
 
-    public Task<Portfolio?> GetByIdAsync(int id)
+    public async Task<Portfolio?> GetByIdAsync(int id)
     {
         throw new NotImplementedException();
     }
