@@ -18,29 +18,15 @@ public class AssetsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<AssetResponse>> Create([FromBody]CreateAssetRequest request)
     {
-        try
-        {
-            var response = await _assetService.CreateAsync(request);
-            return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);   
-        }
-        catch(ApplicationException exception)
-        {
-            return BadRequest(new { message = exception.Message });
-        }
+        var response = await _assetService.CreateAsync(request);
+        return CreatedAtAction(nameof(GetById), new { id = response.Id }, response);   
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<AssetResponse>> GetById(int id)
     {
-        try
-        {
-            var response = await _assetService.GetByIdAsync(id);
-            return Ok(response);   
-        }
-        catch(DomainException exception)
-        {
-            return NotFound(new { message = exception.Message });
-        }
+         var response = await _assetService.GetByIdAsync(id);
+         return Ok(response);
     }
 
     [HttpGet]
@@ -53,32 +39,14 @@ public class AssetsController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateAssetRequest request)
     {
-        try
-        {
-            await _assetService.UpdateAsync(id, request);
-            return NoContent();
-        }
-        catch (DomainException exception)
-        {
-            return NotFound(new { message = exception.Message });
-        }
-        catch (ApplicationException exception)
-        {
-            return BadRequest(new { message = exception.Message });
-        }
+        await _assetService.UpdateAsync(id, request);
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
-        try
-        {
-            await _assetService.DeleteAsync(id);
-            return NoContent();
-        }
-        catch (AssetNotFoundException exception)
-        {
-            return NotFound(new { message = exception.Message });
-        }
+        await _assetService.DeleteAsync(id);
+         return NoContent();
     }
 }
