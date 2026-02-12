@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WealthStack.Domain.Entities;
 using WealthStack.Domain.Interfaces;
 using WealthStack.Infrastructure.Data;
@@ -14,26 +15,36 @@ public class TransactionRepository : ITransactionRepository
     }
     public async Task AddAsync(Transaction transaction)
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task<IEnumerable<Transaction>> GetByAssetIdAsync(int assetId)
-    {
-        throw new NotImplementedException();
+        await _context.Transactions.AddAsync(transaction);
     }
 
     public async Task<Transaction?> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _context.Transactions
+                             .Include(t => t.Asset)
+                             .FirstOrDefaultAsync(t => t.Id == id);
+    }
+
+    public async Task<IEnumerable<Transaction>> GetByAssetIdAsync(int assetId)
+    {
+        
+        return await _context.Transactions
+                             .Where(t => t.AssetId == assetId)
+                             .OrderByDescending(t => t.TransactionDate)
+                             .ToListAsync();
     }
 
     public async Task<IEnumerable<Transaction>> GetByPortfolioIdAsync(int portfolioId)
     {
-        throw new NotImplementedException();
+        return await _context.Transactions
+                             .Where(t => t.PortfolioId == portfolioId)
+                             .Include(t => t.Asset)
+                             .OrderByDescending(t => t.TransactionDate)
+                             .ToListAsync();
     }
 
     public void Remove(Transaction transaction)
     {
-        throw new NotImplementedException();
+        _context.Transactions.Remove(transaction);
     }
 }
