@@ -27,4 +27,11 @@ public class Asset
         Name = name.Trim();
         Type = type;
     }
+
+    public void Update(string ticker, string name, AssetType type)
+    {
+        Ticker = ticker.Trim().ToUpper();
+        Name = name.Trim();
+        Type = type;
+    }
 }

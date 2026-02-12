@@ -16,6 +16,7 @@ public static class DependencyInjection
         services.AddDbContext<WealthStackDbContext>(options =>
             options.UseSqlServer(connectionString));
         
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IAssetRepository, AssetRepository>();
 
         return services;
