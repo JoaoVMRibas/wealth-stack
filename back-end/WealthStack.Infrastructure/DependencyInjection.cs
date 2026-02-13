@@ -18,6 +18,7 @@ public static class DependencyInjection
         
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IAssetRepository, AssetRepository>();
+        services.AddScoped<IPortfolioRepository, PortfolioRepository>();
         services.AddScoped<ITransactionRepository, TransactionRepository>();
 
         return services;

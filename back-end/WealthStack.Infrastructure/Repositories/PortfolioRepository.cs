@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WealthStack.Domain.Entities;
 using WealthStack.Domain.Interfaces;
 using WealthStack.Infrastructure.Data;
@@ -14,26 +15,26 @@ public class PortfolioRepository : IPortfolioRepository
     }
     public async Task AddAsync(Portfolio portfolio)
     {
-        throw new NotImplementedException();
+        await _context.Portfolios.AddAsync(portfolio);
     }
 
     public async Task<IEnumerable<Portfolio>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Portfolios.ToListAsync();
     }
 
     public async Task<Portfolio?> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
-    }
-
-    public void Remove(Portfolio portfolio)
-    {
-        throw new NotImplementedException();
+        return await _context.Portfolios.FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public void Update(Portfolio portfolio)
     {
-        throw new NotImplementedException();
+        _context.Update(portfolio);
+    }
+
+    public void Remove(Portfolio portfolio)
+    {
+        _context.Remove(portfolio);
     }
 }
