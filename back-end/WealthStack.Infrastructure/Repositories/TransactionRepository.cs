@@ -29,6 +29,7 @@ public class TransactionRepository : ITransactionRepository
     {
         
         return await _context.Transactions
+                             .Include(t => t.Asset)
                              .Where(t => t.AssetId == assetId)
                              .OrderByDescending(t => t.TransactionDate)
                              .ToListAsync();
@@ -37,8 +38,8 @@ public class TransactionRepository : ITransactionRepository
     public async Task<IEnumerable<Transaction>> GetByPortfolioIdAsync(int portfolioId)
     {
         return await _context.Transactions
-                             .Where(t => t.PortfolioId == portfolioId)
                              .Include(t => t.Asset)
+                             .Where(t => t.PortfolioId == portfolioId)
                              .OrderByDescending(t => t.TransactionDate)
                              .ToListAsync();
     }
