@@ -66,6 +66,22 @@ public class TransactionService : ITransactionService
         );
     }
 
+    public async Task<TransactionResponse> GetByIdAsync(int id)
+    {
+        var transaction = await _transactionRepository.GetByIdAsync(id) ?? throw new Exception("Transaction not found");
+        return new TransactionResponse(
+            transaction.Id,
+            transaction.Asset.Ticker,
+            transaction.Asset.Name,
+            transaction.Quantity,
+            transaction.UnitPrice,
+            transaction.Fees,
+            transaction.TotalValue,
+            transaction.Type.ToString(),
+            transaction.TransactionDate
+        );
+    }
+
     public async Task<IEnumerable<TransactionResponse>> GetByAssetAsync(int assetId)
     {
         var transaction = await _transactionRepository.GetByAssetIdAsync(assetId);
