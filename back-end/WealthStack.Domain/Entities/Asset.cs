@@ -20,8 +20,7 @@ public class Asset
 
     public Asset(string ticker, string name, AssetType type)
     {
-        if(string.IsNullOrWhiteSpace(ticker)) throw new RequiredFieldException(nameof(ticker));
-        if(string.IsNullOrWhiteSpace(name)) throw new RequiredFieldException(nameof(name));
+        Validate(ticker,name);
         
         Ticker = ticker.Trim().ToUpper();
         Name = name.Trim();
@@ -30,8 +29,16 @@ public class Asset
 
     public void Update(string ticker, string name, AssetType type)
     {
+        Validate(ticker,name);
+
         Ticker = ticker.Trim().ToUpper();
         Name = name.Trim();
         Type = type;
+    }
+
+    private static void Validate(string ticker, string name)
+    {
+        if(string.IsNullOrWhiteSpace(ticker)) throw new RequiredFieldException(nameof(ticker));
+        if(string.IsNullOrWhiteSpace(name)) throw new RequiredFieldException(nameof(name));
     }
 }

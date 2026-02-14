@@ -1,3 +1,4 @@
+using FluentAssertions;
 using WealthStack.Domain.Entities;
 using WealthStack.Domain.Enums;
 using WealthStack.Domain.Exceptions;
@@ -10,12 +11,13 @@ public class AssetTests
     public void Should_Create_Asset_With_Valid_Data()
     {
         // Arrange and Act
-        var asset = new Asset("PETR4","Petrobras",AssetType.Stock);
+        var asset = new Asset("PeTr4 "," Petrobras ",AssetType.Stock);
 
         // Assert
-        Assert.Equal("PETR4", asset.Ticker);
-        Assert.Equal("Petrobras", asset.Name);
-        Assert.Equal(AssetType.Stock, asset.Type);
+        asset.Ticker.Should().MatchRegex("^[A-Z0-9]+$");
+        asset.Ticker.Should().Be("PETR4");
+        asset.Name.Should().Be("Petrobras");
+        asset.Type.Should().Be(AssetType.Stock);
     }
 
     [Theory]
@@ -23,12 +25,11 @@ public class AssetTests
     [InlineData("  ")]
     public void Should_Throw_When_Ticker_Is_Invalid(string invalidTicker)
     {
-        // Arrange, Act and Assert
-        var exception = Assert.Throws<RequiredFieldException>(
-            ()=> new Asset(invalidTicker,"Petrobras",AssetType.Stock)
-        );
+        // Arrange and Act
+        Action act = ()=> new Asset(invalidTicker,"Petrobras",AssetType.Stock);
 
-        Assert.Contains("The 'ticker' field must be filled in, it cannot be empty.",exception.Message);
+        // Assert
+        act.Should().Throw<RequiredFieldException>().WithMessage("The 'ticker' field must be filled in, it cannot be empty.");
     }
 
     [Theory]
@@ -36,12 +37,11 @@ public class AssetTests
     [InlineData("  ")]
     public void Should_Throw_When_Name_Is_Invalid(string invalidName)
     {
-        // Arrange, Act and Assert
-        var exception = Assert.Throws<RequiredFieldException>(
-            ()=> new Asset("PETR4",invalidName,AssetType.Stock)
-        );
+        // Arrange and Act
+        var act = ()=> new Asset("PETR4",invalidName,AssetType.Stock);
 
-        Assert.Contains("The 'name' field must be filled in, it cannot be empty.",exception.Message);
+        // Assert
+        act.Should().Throw<RequiredFieldException>().WithMessage("The 'name' field must be filled in, it cannot be empty.");
     }
 
     [Fact]
@@ -50,7 +50,9 @@ public class AssetTests
         // Arrange and Act
         var asset = new Asset(" pEtR4 ","Petrobras",AssetType.Stock);
 
-        Assert.Equal("PETR4",asset.Ticker);
+        // Assert
+        asset.Ticker.Should().MatchRegex("^[A-Z0-9]+$");
+        asset.Ticker.Should().Be("PETR4");
     }
 
     [Fact]
@@ -59,6 +61,35 @@ public class AssetTests
         // Arrange and Act
         var asset = new Asset("PETR4"," Petrobras ",AssetType.Stock);
 
-        Assert.Equal("Petrobras",asset.Name);
+        // Assert
+        asset.Name.Should().Be("Petrobras");
+    }
+
+    [Fact]
+    public void Should_Update_With_Valid_Data()
+    {
+        // Arrange
+        var asset = new Asset("PETR4", "Petrobras", AssetType.Stock);
+
+        // Act
+        asset.Update("vale3", " Vale ", AssetType.Stock);
+
+        // Assert
+        asset.Ticker.Should().MatchRegex("^[A-Z0-9]+$");
+        asset.Ticker.Should().Be("VALE3");
+        asset.Name.Should().Be("Vale");
+    }
+
+    [Fact]
+    public void Should_Not_Allow_Invalid_Update()
+    {
+        // Arrange
+        var asset = new Asset("PETR4", "Petrobras", AssetType.Stock);
+
+        // Act
+        var act = () => asset.Update(string.Empty, "Vale", AssetType.Stock);
+    
+        // Assert
+        act.Should().Throw<RequiredFieldException>().WithMessage("The 'ticker' field must be filled in, it cannot be empty.");
     }
 }
