@@ -13,11 +13,13 @@ public class Portfolio
 
     private Portfolio() {}
 
-    public Portfolio(string name)
+    public Portfolio(string name, string description)
     {
         if(string.IsNullOrWhiteSpace(name)) throw new RequiredFieldException(nameof(name));
+        if(string.IsNullOrWhiteSpace(description)) throw new RequiredFieldException(nameof(description));
 
         Name = name;
+        Description = description;
     }
 
     public void AddTransaction(Transaction transaction)

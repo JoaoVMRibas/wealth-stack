@@ -10,6 +10,8 @@ public static class DependencyInjection
     {
         services.AddScoped<TransactionDomainService>();
         services.AddScoped<IAssetService, AssetService>();
+        services.AddScoped<ITransactionService, TransactionService>();
+        services.AddScoped<IPortfolioService, PortfolioService>();
         return services;
     }
 }
