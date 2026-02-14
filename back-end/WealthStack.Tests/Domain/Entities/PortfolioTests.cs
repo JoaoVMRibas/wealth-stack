@@ -17,7 +17,7 @@ public class PortfolioTests
     public void Should_Create_Portfolio_With_Valid_Name()
     {
         // Arrange and Act
-        var portfolio = new Portfolio( "Stock portfolios");
+        var portfolio = new Portfolio( "Stock portfolios","Portfolio de ações");
 
         // Assert
         Assert.Equal("Stock portfolios",portfolio.Name);
@@ -32,7 +32,7 @@ public class PortfolioTests
     {
         // Arrrange, Act and Assert
         var exception = Assert.Throws<RequiredFieldException>(
-            () => new Portfolio(invalidName)
+            () => new Portfolio(invalidName,"Portfolio de ações")
         );
 
         Assert.Equal("name", exception.FieldName);
@@ -43,7 +43,7 @@ public class PortfolioTests
     public void Should_Add_Transaction_To_Portfolio()
     {
         // Arrange
-        var portfolio = new Portfolio("Stock Portfolio");
+        var portfolio = new Portfolio("Stock Portfolio","Portfolio de ações");
         var asset = new Asset("PETR4", "Petrobras", AssetType.Stock);
         
         // Usamos o Service para criar uma transação válida respeitando o 'internal'

@@ -18,7 +18,7 @@ public class TransactionTests
     {
         // Arrange
         var asset = new Asset("PETR4","Petrobras",AssetType.Stock);
-        var portfolio = new Portfolio("Stock Portfolio");
+        var portfolio = new Portfolio("Stock Portfolio","Portfolio de ações");
         var transactionDate = DateTime.Now;
 
         // Act
@@ -49,7 +49,7 @@ public class TransactionTests
     {
         // Arrange
         var asset = new Asset("PETR4","Petrobras",AssetType.Crypto);
-        var portfolio = new Portfolio("Stock Portfolio");
+        var portfolio = new Portfolio("Stock Portfolio","Portfolio de ações");
         var transactionDate = DateTime.Now;
 
         // Act
@@ -83,7 +83,7 @@ public class TransactionTests
     {
         // Arrange
         var asset = new Asset("PETR4","Petrobras",invalidType);
-        var portfolio = new Portfolio("Stock Portfolio");
+        var portfolio = new Portfolio("Stock Portfolio","Portfolio de ações");
         var qtd = 10.24m;
         
         // Act and Assert
@@ -107,7 +107,7 @@ public class TransactionTests
     public void Should_Throw_When_Asset_Is_Null()
     {
         // Arrange
-        var portfolio = new Portfolio("Stock Portfolio");
+        var portfolio = new Portfolio("Stock Portfolio","Portfolio de ações");
         
         // Act and Assert
         var exception = Assert.Throws<AssetNotFoundException>(
@@ -156,7 +156,7 @@ public class TransactionTests
     {
         // Arrange
         var asset = new Asset("PETR4","Petrobras",AssetType.Stock);
-        var portfolio = new Portfolio("Stock Portfolio");
+        var portfolio = new Portfolio("Stock Portfolio","Portfolio de ações");
 
         var exception = Assert.Throws<InvalidValueException>(
             () => _transactionDomainService.Create
@@ -181,7 +181,7 @@ public class TransactionTests
     {
         // Arrange
         var asset = new Asset("PETR4","Petrobras",AssetType.Stock);
-        var portfolio = new Portfolio("Stock Portfolio");
+        var portfolio = new Portfolio("Stock Portfolio","Portfolio de ações");
 
         var exception = Assert.Throws<InvalidValueException>(
             () => _transactionDomainService.Create
@@ -204,7 +204,7 @@ public class TransactionTests
     {
         // Arrange
         var asset = new Asset("PETR4","Petrobras",AssetType.Stock);
-        var portfolio = new Portfolio("Stock Portfolio");
+        var portfolio = new Portfolio("Stock Portfolio","Portfolio de ações");
 
         var exception = Assert.Throws<InvalidValueException>(
             () => _transactionDomainService.Create
