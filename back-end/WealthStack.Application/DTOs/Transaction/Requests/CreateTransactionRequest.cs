@@ -1,6 +1,6 @@
 namespace WealthStack.Application.DTOs.Transactions.Requests;
 
-public record CreateTransactionRequest(
+public sealed record CreateTransactionRequest(
     int AssetId,
     int PortfolioId,
     decimal Quantity,

@@ -1,6 +1,6 @@
 namespace WealthStack.Application.DTOs.Assets.Requests;
 
-public record UpdateAssetRequest(
+public sealed record UpdateAssetRequest(
     string Ticker,
     string Name,
     string Type

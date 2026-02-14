@@ -1,6 +1,6 @@
 namespace WealthStack.Application.DTOs.Transactions.Responses;
 
-public record TransactionResponse(
+public sealed record TransactionResponse(
     int Id,
     string AssetTicker,
     string AssetName,

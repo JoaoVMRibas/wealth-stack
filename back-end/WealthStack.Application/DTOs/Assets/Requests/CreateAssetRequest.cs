@@ -1,6 +1,6 @@
 namespace WealthStack.Application.DTOs.Assets.Requests;
 
-public record CreateAssetRequest(
+public sealed record CreateAssetRequest(
     string Ticker,
     string Name,
     string Type
