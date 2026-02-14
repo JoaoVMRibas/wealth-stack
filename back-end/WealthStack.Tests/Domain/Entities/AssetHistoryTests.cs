@@ -1,3 +1,4 @@
+using FluentAssertions;
 using WealthStack.Domain.Entities;
 using WealthStack.Domain.Enums;
 using WealthStack.Domain.Exceptions;
@@ -11,15 +12,15 @@ public class AssetHistoryTests
     {
         // Arrange
         var asset = new Asset("PETR4","Petrobras",AssetType.Stock);
-        var referenceDate = DateTime.Now;
+        var referenceDate = DateTime.UtcNow;
 
         // Act
-        var assetHistory = new AssetHistory(asset.Id,27.2m,referenceDate);
+        var history = new AssetHistory(asset.Id,27.2m,referenceDate);
 
         // Assert
-        Assert.Equal(asset.Id,assetHistory.AssetId);
-        Assert.Equal(27.2m,assetHistory.Price);
-        Assert.Equal(referenceDate,assetHistory.ReferenceDate);
+        history.AssetId.Should().Be(asset.Id);
+        history.Price.Should().Be(27.2m);
+        history.ReferenceDate.Should().Be(referenceDate);
     }
 
     [Theory]
@@ -29,12 +30,41 @@ public class AssetHistoryTests
     {
         // Arrange
         var asset = new Asset("PETR4","Petrobras",AssetType.Stock);
-        var referenceDate = DateTime.Now;
+        var referenceDate = DateTime.UtcNow;
 
-        // Act and Assert
-        var exception = Assert.Throws<InvalidValueException>(()=>new AssetHistory(asset.Id,invalidPrice,referenceDate));
+        // Act
+        var act = () => new AssetHistory(asset.Id,invalidPrice,referenceDate);
 
-        Assert.Contains("Price must be greater than zero.",exception.Message);
+        // Assert
+        act.Should().Throw<InvalidValueException>().WithMessage("Price must be greater than zero.");
+    }
+
+    [Fact]
+    public void Should_Allow_Date_Up_To_3_Minutes_In_Future()
+    {
+        var allowedFutureDate = DateTime.UtcNow.AddMinutes(2);
+
+        var history = new AssetHistory(
+            assetId: 1,
+            price: 100,
+            referenceDate: allowedFutureDate
+        );
+
+        history.ReferenceDate.Should().Be(allowedFutureDate);
+    }
+
+    [Fact]
+    public void Should_Allow_Past_Date()
+    {
+        var pastDate = DateTime.UtcNow.AddDays(-10);
+
+        var history = new AssetHistory(
+            assetId: 1,
+            price: 100,
+            referenceDate: pastDate
+        );
+
+        history.ReferenceDate.Should().Be(pastDate);
     }
 
     [Fact]
@@ -42,13 +72,12 @@ public class AssetHistoryTests
     {
         // Arrange
         var asset = new Asset("PETR4", "Petrobras", AssetType.Stock);
-        var futureDate = DateTime.UtcNow.AddMinutes(10); // 10 min no futuro
+        var invalidFutureDate = DateTime.UtcNow.AddMinutes(10);
 
-        // Act and Assert
-        var exception = Assert.Throws<FutureDateNotAllowedException>(() => 
-            new AssetHistory(asset.Id, 27.2m, futureDate)
-        );
+        // Act
+        var act = () => new AssetHistory(asset.Id, 27.2m, invalidFutureDate);
 
-        Assert.Contains("Reference date cannot be in the future.", exception.Message);
+        // Assert
+        act.Should().Throw<FutureDateNotAllowedException>().WithMessage("Reference date cannot be in the future.");
     }
 }

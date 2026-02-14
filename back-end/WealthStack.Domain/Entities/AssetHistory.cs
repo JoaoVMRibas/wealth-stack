@@ -1,4 +1,5 @@
 using WealthStack.Domain.Exceptions;
+using WealthStack.Domain.Policies;
 
 namespace WealthStack.Domain.Entities;
 
@@ -16,10 +17,15 @@ public class AssetHistory
     {
         if(price <= 0) throw InvalidValueException.PriceMustBeGreaterThanZero();
 
-        if(referenceDate > DateTime.UtcNow.AddMinutes(5)) throw new FutureDateNotAllowedException();
+        if(IsReferenceDateInFuture(referenceDate,DateTime.UtcNow)) throw new FutureDateNotAllowedException();
 
         AssetId = assetId;
         Price = price;
         ReferenceDate = referenceDate;
+    }
+
+    private bool IsReferenceDateInFuture(DateTime referenceDate, DateTime now)
+    {
+        return referenceDate > now.AddMinutes(AssetHistoryPolicy.AllowedFutureToleranceMinutes);
     }
 }
