@@ -17,7 +17,8 @@ public class PortfolioConfiguration : IEntityTypeConfiguration<Portfolio>
                .IsRequired();
         
         builder.Property(p => p.Description)
-               .HasMaxLength(500);
+               .HasMaxLength(500)
+               .IsRequired();
         
         builder.HasMany(p => p.Transactions)
                .WithOne(t => t.Portfolio)
