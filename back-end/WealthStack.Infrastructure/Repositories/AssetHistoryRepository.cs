@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using WealthStack.Domain.Entities;
 using WealthStack.Domain.Interfaces;
 using WealthStack.Infrastructure.Data;
@@ -14,16 +15,19 @@ public class AssetHistoryRepository : IAssetHistoryRepository
     }
     public async Task AddAsync(AssetHistory assetHistory)
     {
-        throw new NotImplementedException();
+        await _context.AssetHistories.AddAsync(assetHistory);
     }
 
     public async Task AddRangeAsync(IEnumerable<AssetHistory> historyRecords)
     {
-        throw new NotImplementedException();
+        await _context.AssetHistories.AddRangeAsync(historyRecords);
     }
 
     public async Task<IEnumerable<AssetHistory>> GetHistoryByAssetIdAsync(int assetId)
     {
-        throw new NotImplementedException();
+        return await _context.AssetHistories
+                             .Where(h => h.AssetId == assetId)
+                             .OrderByDescending(h => h.ReferenceDate)
+                             .ToListAsync();
     }
 }
