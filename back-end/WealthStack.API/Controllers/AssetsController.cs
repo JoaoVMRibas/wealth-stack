@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using WealthStack.Application.DTOs.Assets.Requests;
 using WealthStack.Application.DTOs.Assets.Responses;
 using WealthStack.Application.Interfaces;
-using WealthStack.Domain.Exceptions;
+
+namespace WealthStack.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
