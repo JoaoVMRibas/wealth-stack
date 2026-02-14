@@ -7,4 +7,7 @@ public interface IPortfolioService
 {
     Task<PortfolioResponse> CreateAsync(PortfolioRequest request);
     Task<PortfolioResponse> GetByIdAsync(int id);
+    Task<IEnumerable<PortfolioResponse>> GetAllAsync();
+    Task UpdateAsync(int id, PortfolioRequest request);
+    Task DeleteAsync(int id);
 }

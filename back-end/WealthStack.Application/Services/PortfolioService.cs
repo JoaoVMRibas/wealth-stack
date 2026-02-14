@@ -33,4 +33,29 @@ public class PortfolioService : IPortfolioService
 
         return new PortfolioResponse(portfolio.Id,portfolio.Name,portfolio.Description);
     }
+
+    public async Task<IEnumerable<PortfolioResponse>> GetAllAsync()
+    {
+        var portfolios = await _portfolioRepository.GetAllAsync();
+
+        return portfolios.Select(p => new PortfolioResponse(p.Id,p.Name,p.Description));
+    }
+
+    public async Task UpdateAsync(int id, PortfolioRequest request)
+    {
+        var portfolio = await _portfolioRepository.GetByIdAsync(id) ?? throw new PortfolioNotFoundException();
+
+        portfolio.Update(request.Name, request.Description);
+
+        _portfolioRepository.Update(portfolio);
+        await _unitOfWork.CommitAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var portfolio = await _portfolioRepository.GetByIdAsync(id) ?? throw new PortfolioNotFoundException();
+
+        _portfolioRepository.Remove(portfolio);
+        await _unitOfWork.CommitAsync();
+    }
 }

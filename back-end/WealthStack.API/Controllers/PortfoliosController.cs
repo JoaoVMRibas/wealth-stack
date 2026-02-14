@@ -31,4 +31,25 @@ public class PortfoliosController : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<PortfolioResponse>>> GetAll()
+    {
+        var response = await _portfolioService.GetAllAsync();
+        return Ok(response);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] PortfolioRequest request)
+    {
+        await _portfolioService.UpdateAsync(id, request);
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        await _portfolioService.DeleteAsync(id);
+        return NoContent();
+    }
 }
