@@ -22,11 +22,6 @@ public class Portfolio
         Description = description;
     }
 
-    public void AddTransaction(Transaction transaction)
-    {
-        _transactions.Add(transaction);
-    }
-
     public void Update(string name, string description)
     {
         if(string.IsNullOrWhiteSpace(name)) throw new RequiredFieldException(nameof(name));
