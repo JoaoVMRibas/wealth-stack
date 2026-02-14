@@ -7,11 +7,11 @@ namespace WealthStack.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PortfolioController : ControllerBase
+public class PortfoliosController : ControllerBase
 {
     private readonly IPortfolioService _portfolioService;
 
-    public PortfolioController(IPortfolioService portfolioService)
+    public PortfoliosController(IPortfolioService portfolioService)
     {
         _portfolioService = portfolioService;
     }
