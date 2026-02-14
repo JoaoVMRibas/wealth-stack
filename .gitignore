@@ -487,3 +487,6 @@ back-end/WealthStack.API/appsettings.json
 
 # EF Migrations
 back-end/WealthStack.Infrastructure/Migrations/
+
+# Coverage-Report
+back-end/WealthStack.Tests/coverage-report/

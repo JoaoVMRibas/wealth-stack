@@ -5,6 +5,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
+    <CollectCoverage>true</CollectCoverage>
+    <CoverletOutputFormat>cobertura</CoverletOutputFormat>
+    <Exclude>[*.Tests]*</Exclude>
+    <ExcludeByFile>**/obj/**/*.cs;**/*.g.cs;**/*.generated.cs</ExcludeByFile>
   </PropertyGroup>
 
   <ItemGroup>
