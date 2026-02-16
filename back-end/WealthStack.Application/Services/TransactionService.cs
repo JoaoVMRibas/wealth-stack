@@ -5,7 +5,6 @@ using WealthStack.Application.Interfaces;
 using WealthStack.Domain.Enums;
 using WealthStack.Domain.Exceptions;
 using WealthStack.Domain.Interfaces;
-using WealthStack.Domain.Services;
 
 namespace WealthStack.Application.Services;
 
@@ -15,7 +14,7 @@ public class TransactionService : ITransactionService
     private readonly IPortfolioRepository _portfolioRepository;
     private readonly ITransactionRepository _transactionRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly TransactionDomainService _domainService;
+    private readonly ITransactionDomainService _domainService;
 
     public TransactionService
     (
@@ -23,7 +22,7 @@ public class TransactionService : ITransactionService
         IPortfolioRepository portfolioRepository,
         ITransactionRepository transactionRepository,
         IUnitOfWork unitOfWork,
-        TransactionDomainService domainService)
+        ITransactionDomainService domainService)
     {
         _assetRepository = assetRepository;
         _portfolioRepository = portfolioRepository;
@@ -68,7 +67,7 @@ public class TransactionService : ITransactionService
 
     public async Task<TransactionResponse> GetByIdAsync(int id)
     {
-        var transaction = await _transactionRepository.GetByIdAsync(id) ?? throw new Exception("Transaction not found");
+        var transaction = await _transactionRepository.GetByIdAsync(id) ?? throw new TransactionNotFoundException();
         return new TransactionResponse(
             transaction.Id,
             transaction.Asset.Ticker,
@@ -118,7 +117,7 @@ public class TransactionService : ITransactionService
 
     public async Task DeleteAsync(int id)
     {
-        var transaction = await _transactionRepository.GetByIdAsync(id) ?? throw new Exception("Transaction not found");        
+        var transaction = await _transactionRepository.GetByIdAsync(id) ?? throw new TransactionNotFoundException();        
         _transactionRepository.Remove(transaction);
         await _unitOfWork.CommitAsync();
     }

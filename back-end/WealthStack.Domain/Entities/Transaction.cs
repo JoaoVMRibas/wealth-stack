@@ -19,14 +19,19 @@ public class Transaction
 
     private Transaction() {}
 
-    internal Transaction(int assetId, int portfolioId, decimal quantity, decimal unitPrice, decimal fees, TransactionType type, DateTime transactionDate)
+    internal Transaction(Asset asset, Portfolio portfolio, decimal quantity, decimal unitPrice, decimal fees, TransactionType type, DateTime transactionDate)
     {
         if(quantity <= 0) throw InvalidValueException.QuantityMustBeGreaterThanZero();
         if(unitPrice <= 0) throw InvalidValueException.UnitPriceMustBeGreaterThanZero();
         if(fees < 0) throw InvalidValueException.FeesCannotBeNegative();
+        if(asset == null) throw new AssetNotFoundException();
+        if(portfolio == null) throw new PortfolioNotFoundException();
 
-        AssetId = assetId;
-        PortfolioId = portfolioId;
+        Asset = asset;
+        Portfolio = portfolio;
+        AssetId = asset.Id;
+        PortfolioId = portfolio.Id;
+
         Quantity = quantity;
         UnitPrice = unitPrice;
         Fees = fees;

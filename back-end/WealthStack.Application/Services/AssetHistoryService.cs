@@ -26,7 +26,7 @@ public class AssetHistoryService : IAssetHistoryService
     {
         var asset = await _assetRepository.GetByIdAsync(request.AssetId) ?? throw new AssetNotFoundException();
 
-        var history = new AssetHistory(asset.Id, request.Price, request.ReferenceDate);
+        var history = new AssetHistory(asset, request.Price, request.ReferenceDate);
 
         await _historyRepository.AddAsync(history);
         await _unitOfWork.CommitAsync();

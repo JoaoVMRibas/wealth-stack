@@ -13,13 +13,15 @@ public class AssetHistory
 
     private AssetHistory() {}
 
-    public AssetHistory(int assetId, decimal price, DateTime referenceDate)
+    public AssetHistory(Asset asset, decimal price, DateTime referenceDate)
     {
         if(price <= 0) throw InvalidValueException.PriceMustBeGreaterThanZero();
-
         if(IsReferenceDateInFuture(referenceDate,DateTime.UtcNow)) throw new FutureDateNotAllowedException();
+        if(asset == null) throw new AssetNotFoundException();
 
-        AssetId = assetId;
+        Asset = asset;
+        AssetId = asset.Id;
+
         Price = price;
         ReferenceDate = referenceDate;
     }
