@@ -71,6 +71,18 @@ public class AssetService : IAssetService
         await _unitOfWork.CommitAsync();
     }
 
+    public async Task ActivateAsync(int id)
+    {
+        var asset = await _assetRepository.GetByIdAsync(id) ?? throw new AssetNotFoundException();
+
+        if (asset.IsActive) return;
+
+        asset.Activate();
+
+        _assetRepository.Update(asset);
+        await _unitOfWork.CommitAsync();
+    }
+
     public async Task DeleteAsync(int id)
     {
         var asset = await _assetRepository.GetByIdAsync(id) ?? throw new AssetNotFoundException();

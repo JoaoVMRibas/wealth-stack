@@ -44,6 +44,13 @@ public class AssetsController : ControllerBase
         return NoContent();
     }
 
+    [HttpPatch("{id}/activate")]
+    public async Task<IActionResult> Activate(int id)
+    {
+        await _assetService.ActivateAsync(id);
+        return NoContent();
+    }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

@@ -46,6 +46,13 @@ public class PortfoliosController : ControllerBase
         return NoContent();
     }
 
+    [HttpPatch("{id}/activate")]
+    public async Task<IActionResult> Activate(int id)
+    {
+        await _portfolioService.ActivateAsync(id);
+        return NoContent();
+    }
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

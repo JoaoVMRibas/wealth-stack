@@ -51,6 +51,18 @@ public class PortfolioService : IPortfolioService
         await _unitOfWork.CommitAsync();
     }
 
+    public async Task ActivateAsync(int id)
+    {
+        var portfolio = await _portfolioRepository.GetByIdAsync(id) ?? throw new PortfolioNotFoundException();
+
+        if (portfolio.IsActive) return;
+
+        portfolio.Activate();
+
+        _portfolioRepository.Update(portfolio);
+        await _unitOfWork.CommitAsync();
+    }
+
     public async Task DeleteAsync(int id)
     {
         var portfolio = await _portfolioRepository.GetByIdAsync(id) ?? throw new PortfolioNotFoundException();

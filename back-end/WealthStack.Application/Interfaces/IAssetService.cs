@@ -9,5 +9,6 @@ public interface IAssetService
     Task<IEnumerable<AssetResponse>> GetAllAsync();
     Task<AssetResponse?> GetByIdAsync(int id);
     Task UpdateAsync(int id, UpdateAssetRequest request);
+    Task ActivateAsync(int id);
     Task DeleteAsync(int id);
 }
