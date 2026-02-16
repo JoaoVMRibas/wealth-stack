@@ -73,7 +73,11 @@ public class AssetService : IAssetService
     {
         var asset = await _assetRepository.GetByIdAsync(id) ?? throw new AssetNotFoundException();
 
-        _assetRepository.Remove(asset);
+        if (!asset.IsActive) throw new InactiveAssetException(asset.Ticker);
+
+        asset.Deactivate();
+
+        _assetRepository.Update(asset);
         await _unitOfWork.CommitAsync();
     }
 }

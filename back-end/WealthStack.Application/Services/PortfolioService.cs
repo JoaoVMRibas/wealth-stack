@@ -55,7 +55,11 @@ public class PortfolioService : IPortfolioService
     {
         var portfolio = await _portfolioRepository.GetByIdAsync(id) ?? throw new PortfolioNotFoundException();
 
-        _portfolioRepository.Remove(portfolio);
+        if (!portfolio.IsActive) throw new InactivePortfolioException(portfolio.Name);
+
+        portfolio.Deactivate();
+
+        _portfolioRepository.Update(portfolio);
         await _unitOfWork.CommitAsync();
     }
 }
