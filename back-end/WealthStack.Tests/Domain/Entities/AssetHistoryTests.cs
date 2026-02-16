@@ -15,7 +15,7 @@ public class AssetHistoryTests
         var referenceDate = DateTime.UtcNow;
 
         // Act
-        var history = new AssetHistory(asset.Id,27.2m,referenceDate);
+        var history = new AssetHistory(asset,27.2m,referenceDate);
 
         // Assert
         history.AssetId.Should().Be(asset.Id);
@@ -33,7 +33,7 @@ public class AssetHistoryTests
         var referenceDate = DateTime.UtcNow;
 
         // Act
-        var act = () => new AssetHistory(asset.Id,invalidPrice,referenceDate);
+        var act = () => new AssetHistory(asset,invalidPrice,referenceDate);
 
         // Assert
         act.Should().Throw<InvalidValueException>().WithMessage("Price must be greater than zero.");
@@ -43,12 +43,9 @@ public class AssetHistoryTests
     public void Should_Allow_Date_Up_To_3_Minutes_In_Future()
     {
         var allowedFutureDate = DateTime.UtcNow.AddMinutes(2);
+        var asset = new Asset("PETR4","Petrobras",AssetType.Stock);
 
-        var history = new AssetHistory(
-            assetId: 1,
-            price: 100,
-            referenceDate: allowedFutureDate
-        );
+        var history = new AssetHistory(asset,100,allowedFutureDate);
 
         history.ReferenceDate.Should().Be(allowedFutureDate);
     }
@@ -57,9 +54,10 @@ public class AssetHistoryTests
     public void Should_Allow_Past_Date()
     {
         var pastDate = DateTime.UtcNow.AddDays(-10);
+        var asset = new Asset("PETR4","Petrobras",AssetType.Stock);
 
         var history = new AssetHistory(
-            assetId: 1,
+            asset: asset,
             price: 100,
             referenceDate: pastDate
         );
@@ -75,7 +73,7 @@ public class AssetHistoryTests
         var invalidFutureDate = DateTime.UtcNow.AddMinutes(10);
 
         // Act
-        var act = () => new AssetHistory(asset.Id, 27.2m, invalidFutureDate);
+        var act = () => new AssetHistory(asset, 27.2m, invalidFutureDate);
 
         // Assert
         act.Should().Throw<FutureDateNotAllowedException>().WithMessage("Reference date cannot be in the future.");

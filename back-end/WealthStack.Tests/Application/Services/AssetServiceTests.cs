@@ -97,6 +97,23 @@ public class AssetServiceTests
     }
 
     [Fact]
+    public async Task UpdateAsync_Should_Update_And_Commit()
+    {
+        // Arrange
+        var asset = new Asset("AAPL", "Apple", AssetType.Stock);
+        _assetRepository.GetByIdAsync(asset.Id).Returns(asset);
+
+        var request = new UpdateAssetRequest("PETR4","Petrobras","Stock");
+
+        //Act
+        await _service.UpdateAsync(asset.Id,request);
+
+        // Assert
+        _assetRepository.Received(1).Update(asset);
+        await _unitOfWork.Received(1).CommitAsync();
+    }
+
+    [Fact]
     public async Task DeleteAsync_Should_Remove_And_Commit()
     {
         var asset = new Asset("AAPL", "Apple", AssetType.Stock);

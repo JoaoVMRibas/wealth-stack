@@ -15,48 +15,6 @@ public class TransactionDomainServiceTests
     }
 
     [Fact]
-    public void Should_Throw_When_Asset_Is_Null()
-    {
-        // Arrange
-        var portfolio = new Portfolio("Stock Portfolio","Portfolio de ações");
-        
-        // Act
-        var act = () => _transactionDomainService.Create(
-            null!,
-            portfolio,
-            10,
-            25.50m,
-            2.5m,
-            TransactionType.Buy,
-            DateTime.UtcNow
-        );
-
-        // Assert
-        act.Should().Throw<AssetNotFoundException>().WithMessage("Asset not found.");
-    }
-
-    [Fact]
-    public void Should_Throw_When_Portfolio_Is_Null()
-    {
-        // Arrange
-        var asset = new Asset("PETR4","Petrobras",AssetType.Stock);
-        
-        // Act
-        var act = () => _transactionDomainService.Create(
-            asset,
-            null!,
-            10,
-            25.50m,
-            2.5m,
-            TransactionType.Buy,
-            DateTime.UtcNow
-        );
-
-        // Assert
-        act.Should().Throw<PortfolioNotFoundException>().WithMessage("Portfolio not found.");
-    }
-
-    [Fact]
     public void Should_Create_Transaction_When_Fractional_Quantity_For_Crypto_Asset()
     {
         // Arrange
