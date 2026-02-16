@@ -19,12 +19,16 @@ public class AssetConfiguration : IEntityTypeConfiguration<Asset>
         builder.HasIndex(a => a.Ticker).IsUnique();
 
         builder.Property(a => a.Name)
-            .IsRequired()
-            .HasMaxLength(100);
+               .IsRequired()
+               .HasMaxLength(100);
 
         builder.Property(a => a.Type)
-            .HasConversion<string>()
-            .HasMaxLength(30);
+               .HasConversion<string>()
+               .HasMaxLength(30);
+        
+        builder.Property(a => a.IsActive)
+               .IsRequired()
+               .HasDefaultValue(true);
 
         builder.HasMany(a => a.History)
                .WithOne(h => h.Asset)

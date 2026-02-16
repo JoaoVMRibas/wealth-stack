@@ -20,6 +20,10 @@ public class PortfolioConfiguration : IEntityTypeConfiguration<Portfolio>
                .HasMaxLength(500)
                .IsRequired();
         
+        builder.Property(p => p.IsActive)
+               .IsRequired()
+               .HasDefaultValue(true);
+        
         builder.HasMany(p => p.Transactions)
                .WithOne(t => t.Portfolio)
                .HasForeignKey(t => t.PortfolioId)
