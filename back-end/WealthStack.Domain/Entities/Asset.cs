@@ -9,6 +9,7 @@ public class Asset
     public string Name { get; private set; } = string.Empty;
     public string Ticker { get; private set; } = string.Empty;
     public AssetType Type { get; private set; }
+    public bool IsActive { get; private set; }
 
     private readonly List<Transaction> _transactions = [];
     public IReadOnlyCollection<Transaction> Transactions => _transactions.AsReadOnly();
@@ -25,6 +26,7 @@ public class Asset
         Ticker = ticker.Trim().ToUpper();
         Name = name.Trim();
         Type = type;
+        IsActive = true;
     }
 
     public void Update(string ticker, string name, AssetType type)
@@ -40,5 +42,15 @@ public class Asset
     {
         if(string.IsNullOrWhiteSpace(ticker)) throw new RequiredFieldException(nameof(ticker));
         if(string.IsNullOrWhiteSpace(name)) throw new RequiredFieldException(nameof(name));
+    }
+
+    public void Activate()
+    {
+        IsActive = true;
+    }
+
+    public void Deactivate()
+    {
+        IsActive = false;
     }
 }
