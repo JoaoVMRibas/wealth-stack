@@ -18,6 +18,12 @@ public class TransactionDomainService : ITransactionDomainService
         DateTime date
     )
     {
+        if (!asset.IsActive) 
+            throw new InactiveAssetException(asset.Ticker);
+
+        if (!portfolio.IsActive) 
+            throw new InactivePortfolioException(portfolio.Name);
+
         if(asset.Type != AssetType.Crypto && quantity % 1 != 0)
             throw new FractionalQuantityNotAllowedException(asset.Type,quantity);
 
