@@ -20,6 +20,13 @@ public class AssetRepository : IAssetRepository
 
     public async Task<IEnumerable<Asset>> GetAllAsync()
     {
+        return await _context.Assets
+                             .Where(a => a.IsActive)
+                             .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Asset>> GetAllIncludingInactiveAsync()
+    {
         return await _context.Assets.ToListAsync();
     }
 

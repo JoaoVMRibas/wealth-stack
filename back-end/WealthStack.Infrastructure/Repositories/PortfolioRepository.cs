@@ -20,6 +20,13 @@ public class PortfolioRepository : IPortfolioRepository
 
     public async Task<IEnumerable<Portfolio>> GetAllAsync()
     {
+        return await _context.Portfolios
+                             .Where(p => p.IsActive)
+                             .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Portfolio>> GetAllIncludingInactiveAsync()
+    {
         return await _context.Portfolios.ToListAsync();
     }
 
