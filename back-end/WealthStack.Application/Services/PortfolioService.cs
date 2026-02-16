@@ -24,21 +24,21 @@ public class PortfolioService : IPortfolioService
         await _portfolioRepository.AddAsync(portfolio);
         await _unitOfWork.CommitAsync();
         
-        return new PortfolioResponse(portfolio.Id,portfolio.Name,portfolio.Description);
+        return new PortfolioResponse(portfolio.Id,portfolio.Name,portfolio.Description,portfolio.IsActive);
     }
 
     public async Task<PortfolioResponse> GetByIdAsync(int id)
     {
         var portfolio = await _portfolioRepository.GetByIdAsync(id) ?? throw new PortfolioNotFoundException();
 
-        return new PortfolioResponse(portfolio.Id,portfolio.Name,portfolio.Description);
+        return new PortfolioResponse(portfolio.Id,portfolio.Name,portfolio.Description,portfolio.IsActive);
     }
 
     public async Task<IEnumerable<PortfolioResponse>> GetAllAsync()
     {
         var portfolios = await _portfolioRepository.GetAllAsync();
 
-        return portfolios.Select(p => new PortfolioResponse(p.Id,p.Name,p.Description));
+        return portfolios.Select(p => new PortfolioResponse(p.Id,p.Name,p.Description,p.IsActive));
     }
 
     public async Task UpdateAsync(int id, PortfolioRequest request)

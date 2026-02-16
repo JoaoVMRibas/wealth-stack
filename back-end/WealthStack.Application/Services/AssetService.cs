@@ -34,7 +34,8 @@ public class AssetService : IAssetService
             asset.Id,
             asset.Ticker,
             asset.Name,
-            asset.Type.ToString()
+            asset.Type.ToString(),
+            asset.IsActive
         );
     }
 
@@ -46,7 +47,8 @@ public class AssetService : IAssetService
             asset.Id,
             asset.Ticker,
             asset.Name,
-            asset.Type.ToString()
+            asset.Type.ToString(),
+            asset.IsActive
         );
     }
 
@@ -54,7 +56,7 @@ public class AssetService : IAssetService
     {
         var assets = await _assetRepository.GetAllAsync();
 
-        return assets.Select(a => new AssetResponse(a.Id,a.Ticker,a.Name,a.Type.ToString()));
+        return assets.Select(a => new AssetResponse(a.Id,a.Ticker,a.Name,a.Type.ToString(),a.IsActive));
     }
 
     public async Task UpdateAsync(int id, UpdateAssetRequest request)

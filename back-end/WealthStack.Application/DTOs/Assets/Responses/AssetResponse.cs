@@ -4,5 +4,6 @@ public sealed record AssetResponse(
     int Id,
     string Ticker,
     string Name,
-    string Type
+    string Type,
+    bool IsActive
 );
